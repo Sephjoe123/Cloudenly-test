@@ -1,0 +1,55 @@
+describe('template spec', () => {  
+it('Verifies successful login Functionality without Domain', () =>{
+  cy.visit('https://cloudenly.com/');
+  /* ==== Generated with Cypress Studio ==== */
+  cy.get('.v-btn--rounded > .v-btn__content > .font-semibold').should("be.visible").click();
+  cy.wait(3000)
+  cy.get('.v-input.col-span-12 > .v-input__control > .v-input__slot > .v-text-field__slot').click();
+  cy.get('input[type="text"]').eq(1).type("makay@hldrive.com")
+  cy.get('input[type="password"]').type("@Scelloo1")
+  cy.get('.px-13').should("be.visible").click();
+  cy.wait(40000)
+  // cy.contains("dashboard")
+  cy.url().should("eq","https://app.cloudenly.com/ess/dashboard")
+  cy.get(':nth-child(3) > .sideItem > .textContainer').should("be.visible").click();
+  cy.wait(40000)
+  cy.url().should("eq","https://app.cloudenly.com/ess/view/payslip",{ timeout: 10000 })
+  cy.get('input[type="radio"]').eq(1).should("be.checked")
+  cy.get('.flex.text-blueCrayola > .underline').should("be.visible").click();
+  cy.wait(40000)
+  cy.contains("Employee Summary").should("be.visible")
+  cy.contains("Employee Net Pay").should("be.visible")
+  cy.contains("Pay Date").should("be.visible")
+
+  cy.get(':nth-child(6) > :nth-child(1) > :nth-child(3) > .w-full > :nth-child(2)')
+  .invoke('text')
+  .then(textA => {
+    cy.log('textA:', textA); // Log the value of textA
+
+    cy.get(':nth-child(1) > :nth-child(4) > .w-full > :nth-child(2)')
+      .invoke('text')
+      .then(textB => {
+        cy.log('textB:', textB); // Log the value of textB
+
+        cy.get(':nth-child(1) > :nth-child(5) > .w-full > :nth-child(2)')
+          .invoke('text')
+          .then(textC => {
+            cy.log('textC:', textC); // Log the value of textC
+
+            const numberA = parseInt(textA.replace(/[^0-9]/g, ''));
+            const numberB = parseInt(textB.replace(/[^0-9]/g, ''));
+            const numberC = parseInt(textC.replace(/[^0-9]/g, ''));
+
+            cy.get(':nth-child(6) > :nth-child(1) > .mt-auto > :nth-child(2)')
+              .invoke('text')
+              .then(textD => {
+                cy.log('textD:', textD); // Log the value of textD
+
+                const total = parseInt(textD.replace(/[^0-9]/g, ''));
+                expect(numberA + numberB + numberC).to.equal(total);
+              });
+          });
+      });
+  });
+})
+})
